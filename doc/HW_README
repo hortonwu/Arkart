@@ -1,0 +1,7 @@
+1. UltraSonic Sensor: HC-SR04
+1.1 Pin Lay Out:
+ HC-SR04.Vcc--->UNO.5v
+ HC-SR04.Trig--->UNO.D13
+ HC-SR04.Echo--->UNO.D12
+ HC-SR04.GND--->UNO.GND   
+
