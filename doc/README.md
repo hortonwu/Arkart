@@ -1,4 +1,4 @@
-AVL Autonomous Vehicles Project
+Autonomus Arkart Project
 ===============================
 
 This is the official repository of the hardware team on the AVL Autonomous Vehicles Project.
