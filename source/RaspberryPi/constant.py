@@ -4,8 +4,12 @@ Store constant variable
 #Brushless Motor ECS Zero Speed Value
 ZERO_SPD = 91
 
+# Motor ECS Dead Band
+DEAD_L = 90
+DEAD_H = 98
+
 #Testing Speed for Motor Initialization
-TEST_SPD = 94
+TEST_SPD = 100
 
 #Front Steering Servo
 FRONT_STEER = 0

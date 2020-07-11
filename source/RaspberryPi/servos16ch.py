@@ -15,20 +15,24 @@ def Motor_Spd_Init(ch,zero_spd,test_spd):
     kit.servo[ch].angle = test_spd
     time.sleep(2)
     kit.servo[ch].angle = zero_spd
+    time.sleep(2)
     print("devices is successfuly initialized")
     
     
-def Motor_Spd_Set(ch,zero_spd,target_spd):
+def Motor_Spd_Set(ch,target_spd,dead_l,dead_h):
     # check whether motor spin in different direction if yes, then set to zero and brake for 2 seconds at least 
-    if ((spd_n1 - zerospd)*(target_spd-zero_zpd)) < 0 :
-        
-        kit.servo[ch].angle = zero_spd
+    if ((spd_n1<dead_l) and (target_spd > dead_h)) or ((spd_n1>dead_h) and (target_spd < dead_l)):
+         
+        kit.servo[ch].angle = dead_l 
         time.sleep(2)
         kit.servo[ch].angle = target_spd
     else:
         
         kit.servo[ch].angle = target_spd
     
+def Senvo_Pos_Set(ch,target_pos):
+    # set servo angular postion          
+        kit.servo[ch].angle = target_pos
 
    
     
