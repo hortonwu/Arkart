@@ -6,13 +6,14 @@ from random import randint
 from opcua import ua, Server
 
 
-if __name__ == "__main__":
+def server_setup():
 
     # setup our server
     server = Server()
     server.set_endpoint("opc.tcp://192.168.1.25:4840")
-
+    return server
     # setup our own namespace, not really necessary but should as spec
+def reg_namespace(server,distance_T):
     uri = "Arkart_OPCUA_Server"
     idx = server.register_namespace(uri)
 
@@ -28,10 +29,10 @@ if __name__ == "__main__":
     server.start()
     
     try:
-        distance_T = 0
+        #distance_T = 0
         while True:
             time.sleep(1)
-            distance_T = randint(0,100)
+            #distance_T = randint(0,100)
             distance.set_value(distance_T)
             print(" Distance is {}", distance)
     finally:
