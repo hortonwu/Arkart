@@ -2,7 +2,7 @@
 Store constant variable
 """
 #Brushless Motor ECS Zero Speed Value
-ZERO_SPD = 91
+ZERO_SPD = 92
 
 # Motor ECS Dead Band
 DEAD_L = 90

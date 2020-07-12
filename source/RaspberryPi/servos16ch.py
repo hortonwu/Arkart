@@ -7,8 +7,6 @@ kit = ServoKit(channels=16)
 
 def Motor_Spd_Init(ch,zero_spd,test_spd):
     """ initialze Brushless Motor ECS HobbyKing -35A"""
-    global spd_n1
-    spd_n1 = zero_spd
     
     kit.servo[ch].angle = zero_spd
     time.sleep(1)
@@ -19,18 +17,19 @@ def Motor_Spd_Init(ch,zero_spd,test_spd):
     print("devices is successfuly initialized")
     
     
-def Motor_Spd_Set(ch,target_spd,dead_l,dead_h):
+def Motor_Spd_Set(ch,spd_n1,target_spd,dead_l,dead_h):
     # check whether motor spin in different direction if yes, then set to zero and brake for 2 seconds at least 
-    global spd_n1
+    # global spd_n1
     if ((spd_n1<dead_l) and (target_spd > dead_h)) or ((spd_n1>dead_h) and (target_spd < dead_l)):
          
-        kit.servo[ch].angle = 94 
+        kit.servo[ch].angle = dead_l+2
         time.sleep(2)
         kit.servo[ch].angle = target_spd
     else:
         
         kit.servo[ch].angle = target_spd
     spd_n1 = target_spd
+    return spd_n1
 def Senvo_Pos_Set(ch,target_pos):
     # set servo angular postion          
         kit.servo[ch].angle = target_pos

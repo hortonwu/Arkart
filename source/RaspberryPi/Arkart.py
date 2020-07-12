@@ -19,14 +19,20 @@ test_pl = 105
 test_pr = 75
 #target motor speed
 target_sf= 99
-target_sr= 87
+target_sr= 86
 
 if __name__ == '__main__':
     try:
         val_n = 0
         val_n1 = 0
         val_n2 =0
-                    #front steering 
+        #rear axle previous speed
+        spd_n1_ra = zero_s
+        #rear axle previous speed
+        spd_n1_fl = zero_s
+        #rear axle previous speed
+        spd_n1_fr = zero_s
+        #front steering 
         servos16ch.Motor_Spd_Init(front_s, zero_s, test_s)
         servos16ch.Motor_Spd_Init(rear_s, zero_s, test_s)
         #rear axel wheels 
@@ -43,16 +49,16 @@ if __name__ == '__main__':
             servos16ch.Senvo_Pos_Set(front_s, test_pl)
             servos16ch.Senvo_Pos_Set(rear_s, test_pl)
             time.sleep(2)
-            servos16ch.Motor_Spd_Set(rear_a,target_sf,dead_l,dead_h)
-            servos16ch.Motor_Spd_Set(front_rw,target_sf,dead_l,dead_h)
-            servos16ch.Motor_Spd_Set(front_lw,target_sf,dead_l,dead_h)
-            time.sleep(5)
+            spd_n1_ra = servos16ch.Motor_Spd_Set(rear_a,spd_n1_ra,target_sf,dead_l,dead_h)
+            spd_n1_fr = servos16ch.Motor_Spd_Set(front_rw,spd_n1_fr,target_sf,dead_l,dead_h)
+            spd_n1_fl = servos16ch.Motor_Spd_Set(front_lw,spd_n1_fl,target_sf,dead_l,dead_h)
+            time.sleep(3)
             servos16ch.Senvo_Pos_Set(front_s, test_pr)
             servos16ch.Senvo_Pos_Set(rear_s, test_pr)
-            servos16ch.Motor_Spd_Set(rear_a,target_sr,dead_l,dead_h)
-            servos16ch.Motor_Spd_Set(front_rw,target_sr,dead_l,dead_h)
-            servos16ch.Motor_Spd_Set(front_lw,target_sr,dead_l,dead_h)
-            time.sleep(5)
+            spd_n1_ra = servos16ch.Motor_Spd_Set(rear_a,spd_n1_ra,target_sr,dead_l,dead_h)
+            spd_n1_fr = servos16ch.Motor_Spd_Set(front_rw,spd_n1_fr,target_sr,dead_l,dead_h)
+            spd_n1_fl = servos16ch.Motor_Spd_Set(front_lw,spd_n1_fl,target_sr,dead_l,dead_h)
+            time.sleep(3)
             
             
  
