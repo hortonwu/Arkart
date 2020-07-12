@@ -19,3 +19,9 @@ REAR_STEER = 1
 
 #Rear Axel Motor Drive
 REAR_A = 6
+
+#Rear Axel Motor Drive
+FRONT_RW = 5
+
+#Rear Axel Motor Drive
+FRONT_LW = 4
