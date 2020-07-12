@@ -30,11 +30,11 @@ def reg_namespace(server,distance_T):
     
     try:
         #distance_T = 0
-        while True:
-            time.sleep(1)
-            #distance_T = randint(0,100)
-            distance.set_value(distance_T)
-            print(" Distance is {}", distance)
+        #while True:
+        time.sleep(1)
+        #distance_T = randint(0,100)
+        distance.set_value(distance_T)
+        print(" Distance is {}", distance)
     finally:
         #close connection, remove subcsriptions, etc
         server.stop()

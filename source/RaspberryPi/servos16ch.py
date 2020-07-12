@@ -22,11 +22,12 @@ def Motor_Spd_Set(ch,spd_n1,target_spd,dead_l,dead_h):
     # global spd_n1
     if ((spd_n1<dead_l) and (target_spd > dead_h)) or ((spd_n1>dead_h) and (target_spd < dead_l)):
          
-        kit.servo[ch].angle = dead_l+2
-        time.sleep(2)
+        kit.servo[ch].angle = 94
+        time.sleep(3)
         kit.servo[ch].angle = target_spd
     else:
-        
+        kit.servo[ch].angle = 94
+        time.sleep(3)
         kit.servo[ch].angle = target_spd
     spd_n1 = target_spd
     return spd_n1
