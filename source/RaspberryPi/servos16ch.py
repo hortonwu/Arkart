@@ -23,17 +23,18 @@ def Motor_Spd_Set(ch,spd_n1,target_spd,dead_l,dead_h):
     if ((spd_n1<dead_l) and (target_spd > dead_h)) or ((spd_n1>dead_h) and (target_spd < dead_l)):
          
         kit.servo[ch].angle = 94
-        time.sleep(3)
+        time.sleep(4)
         kit.servo[ch].angle = target_spd
     else:
-        kit.servo[ch].angle = 94
-        time.sleep(3)
+#         kit.servo[ch].angle = 94
+#         time.sleep(3)
         kit.servo[ch].angle = target_spd
     spd_n1 = target_spd
     return spd_n1
+
 def Senvo_Pos_Set(ch,target_pos):
     # set servo angular postion          
-        kit.servo[ch].angle = target_pos
+    kit.servo[ch].angle = target_pos
 
    
     

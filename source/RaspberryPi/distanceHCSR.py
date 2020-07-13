@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 Distance Sensor Tutorial 
 https://tutorials-raspberrypi.com/raspberry-pi-ultrasonic-sensor-hc-sr04/
