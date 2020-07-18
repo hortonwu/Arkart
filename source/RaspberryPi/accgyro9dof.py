@@ -7,7 +7,7 @@ import board
 import busio
 import adafruit_fxos8700
 import adafruit_fxas21002c
-import time
+# import time
 def Accgyro_Init():
 #initalize I2C for fxos8700 and fxas21002c 
     i2c = busio.I2C(board.SCL, board.SDA)

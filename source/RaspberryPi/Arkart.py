@@ -22,22 +22,30 @@ front_rw = constant.FRONT_RW
 front_lw = constant.FRONT_LW
 
 #front servo position 105 degree
-test_pl = 90
-test_pr = 90
+#clockwise circle foward
+steer_fr = 56
+steer_rl = 124
+#clockwise circle reverse
+steer_fl = 124 # left >90 55 is the min, right <90
+steer_rr = 56
+
 #target motor speed
 target_sf= 100
 target_sr= 88
+brake_sf=95
 
+obstacle_dist = 40
 if __name__ == '__main__':
     try:
 #         val_n = 0
 #         val_n1 = 0
 #         val_n2 =0
         # previous step velocity 
-        velocity_n1= 0
+        velocity_n1= 0.0
         #motor drive duration
-        time_T = 0.2
-        time_Tb = 0.4
+        time_T = 0.05
+        time_Tbf = 0.3
+        time_Tb = 0.05
         #rear axle previous speed
         spd_n1_ra = target_sf
         #rear axle previous speed
@@ -67,66 +75,67 @@ if __name__ == '__main__':
 #             opcua_server.reg_namespace(server,dist)
             
             
-            servos16ch.Senvo_Pos_Set(front_s, test_pl)
-            servos16ch.Senvo_Pos_Set(rear_s, test_pl)
+            servos16ch.Senvo_Pos_Set(front_s, steer_fr)
+            servos16ch.Senvo_Pos_Set(rear_s, steer_rl)
             spd_n1_ra = servos16ch.Motor_Spd_Set(rear_a,spd_n1_ra,target_sf,dead_l,dead_h)
             acc_n1=accgyro9dof.Acc_Read(fxos_fxas[0])
             
             time.sleep(time_T)        
 
             acc_n=accgyro9dof.Acc_Read(fxos_fxas[0])
-            velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_T/2 
+            velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_T/2.0 
             velocity_n1 = velocity_n
             acc_n1=acc_n
             
-            while velocity_n < -0.4: #(acc[0] < -0.4) or (acc[1] < -0.4):
-                spd_n1_ra = servos16ch.Motor_Spd_Set(rear_a,spd_n1_ra,zero_s,dead_l,dead_h)
+            while (velocity_n < -0.4) or (acc_n[0]<-1.2): #(acc[0] < -0.4) or (acc[1] < -0.4):
+                spd_n1_ra = servos16ch.Motor_Spd_Set(rear_a,spd_n1_ra,brake_sf,dead_l,dead_h)
                 print("Forward too fast, Brake! Acc_X: %0.3f, velocity:%0.3f" % (acc_n[0],velocity_n))
-                time.sleep(time_Tb)
+                time.sleep(time_Tbf)
                 acc_n=accgyro9dof.Acc_Read(fxos_fxas[0])
-                velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_Tb/2 
+                velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_Tbf/2 
                 velocity_n1 = velocity_n
                 acc_n1=acc_n
-                if acc_n1[0] < 0.3:
-                    velocity_n1=0
+
             
             #spd_n1_fr = servos16ch.Motor_Spd_Set(front_rw,spd_n1_fr,target_sf,dead_l,dead_h)
             #spd_n1_fl = servos16ch.Motor_Spd_Set(front_lw,spd_n1_fl,target_sf,dead_l,dead_h)
 #             time.sleep(0.5)
-            acc_n1 = 0
+            
             dist = distanceHCSR.distance()
             #movingAverage(dist,val_n1,val_n2,val_n)
 #           print ("Measured Distance = %.1f cm" % dist)
             
-            while dist <80:
+            while dist < obstacle_dist:
                 
-                servos16ch.Senvo_Pos_Set(front_s, test_pr)
-                servos16ch.Senvo_Pos_Set(rear_s, test_pr)
+                servos16ch.Senvo_Pos_Set(front_s, steer_fl)
+                servos16ch.Senvo_Pos_Set(rear_s, steer_rr)
           
                 spd_n1_ra = servos16ch.Motor_Spd_Set(rear_a,spd_n1_ra,target_sr,dead_l,dead_h)
     #             spd_n1_fr = servos16ch.Motor_Spd_Set(front_rw,spd_n1_fr,target_sr,dead_l,dead_h)
     #             spd_n1_fl = servos16ch.Motor_Spd_Set(front_lw,spd_n1_fl,target_sr,dead_l,dead_h)
-                acc_n1=accgyro9dof.Acc_Read(fxos_fxas[0])
+#                 acc_n1=accgyro9dof.Acc_Read(fxos_fxas[0])
             
                 time.sleep(time_T)        
 
                 acc_n=accgyro9dof.Acc_Read(fxos_fxas[0])
-                velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_T/2 
+                velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_T*0.5 
                 velocity_n1 = velocity_n
                 acc_n1=acc_n
                 
-                while velocity_n > 0.6 :#(acc[0] < -0.4) or (acc[1] < -0.4):
+                while velocity_n > 0.8 :#(acc[0] < -0.4) or (acc[1] < -0.4):
                     spd_n1_ra = servos16ch.Motor_Spd_Set(rear_a,spd_n1_ra,zero_s,dead_l,dead_h)
                     print("Reverse too fast, Brake! Acc_X: %0.3f, velocity:%0.3f" % (acc_n[0],velocity_n))
                     time.sleep(time_Tb)
                     acc_n=accgyro9dof.Acc_Read(fxos_fxas[0])
-                    velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_Tb/2 
+                    velocity_n = velocity_n1 + (acc_n[0]+acc_n1[0])*time_Tb*0.5
                     velocity_n1 = velocity_n
                     acc_n1=acc_n
+                    if acc_n1[0]<0.5:
+                        velocity_n1 = 0.0
                   
                 dist = distanceHCSR.distance()
                 print ("Measured Distance = %.1f cm" % dist)
-                acc_n1=0
+                acc_n1=(0.0,0.0,0.0)
     
                 
  

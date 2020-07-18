@@ -1,6 +1,6 @@
 from adafruit_servokit import ServoKit
 import time
-import constant
+# import constant
 
 kit = ServoKit(channels=16)
 

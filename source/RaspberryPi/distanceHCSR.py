@@ -48,9 +48,9 @@ def distance():
     TimeElapsed = StopTime - StartTime
     # multiply with the sonic speed (34300 cm/s)
     # and divide by 2, because there and back
-    distance = (TimeElapsed * 34300) / 2
+    distance_T = (TimeElapsed * 34300) / 2
  
-    return distance
+    return distance_T
 
 def movingAverage(arg,val_n1,val_n2,val_n):
     """
